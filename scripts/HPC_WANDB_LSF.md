@@ -121,6 +121,14 @@ After all jobs finish, merge them:
 python3 scripts/merge_simulation_parts.py --parts-dir results/parts --output-prefix results/merged
 ```
 
+This creates the final files:
+
+```text
+results/merged.csv        normalized notebook-style table with complexity columns
+results/merged.raw.csv    raw FACIT result rows
+results/merged.json       raw rows, normalized rows, global fits, and missing part indices
+```
+
 LSF logs are written to:
 
 ```text
