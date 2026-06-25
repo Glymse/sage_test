@@ -27,12 +27,54 @@ test -n "$WANDB_API_KEY" && echo "WANDB_API_KEY is set"
 
 W&B creates the `mulle` project automatically the first time a run is logged.
 
-## 2. Smoke test before HPC
+## 2. Provide Sage on HPC
+
+The Dockerfile is for the local dev container. The LSF job does not build Docker on HPC.
+
+If `sage` is already available:
+
+```bash
+which sage
+```
+
+If not, create an Apptainer/Singularity image once from the repo root:
+
+```bash
+module avail apptainer singularity
+module load apptainer 2>/dev/null || module load singularity
+apptainer pull sage.sif docker://sagemath/sagemath:latest
+```
+
+If your cluster uses `singularity` instead of `apptainer`, use:
+
+```bash
+singularity pull sage.sif docker://sagemath/sagemath:latest
+```
+
+The job script automatically uses `./sage.sif` if it exists. You can also point to a Sage executable manually:
+
+```bash
+export SAGE_CMD=/path/to/sage
+```
+
+## 3. Smoke test before HPC
 
 Run the same script in tiny mode:
 
 ```bash
+apptainer exec sage.sif sage -python scripts/run_simulations.py --smoke-test --output-dir results/smoke
+```
+
+If plain `sage` exists instead, use:
+
+```bash
 sage -python scripts/run_simulations.py --smoke-test --output-dir results/smoke
+```
+
+If your cluster uses `singularity`, use:
+
+```bash
+singularity exec sage.sif sage -python scripts/run_simulations.py --smoke-test --output-dir results/smoke
 ```
 
 It should create:
@@ -42,7 +84,7 @@ results/smoke/smoke-test.json
 results/smoke/smoke-test.csv
 ```
 
-## 3. Submit the CPU LSF array job
+## 4. Submit the CPU LSF array job
 
 From the repository root on DTU HPC:
 
@@ -58,13 +100,13 @@ The job runs one `(size, max_degree)` case per array task:
 #BSUB -n 1
 ```
 
-## 4. Monitor jobs
+## 5. Monitor jobs
 
 ```bash
 bjobs
 ```
 
-## 5. Merge outputs
+## 6. Merge outputs
 
 Each array task saves one part locally:
 

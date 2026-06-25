@@ -19,10 +19,32 @@ export WANDB_MODE="${WANDB_MODE:-online}"
 export WANDB_DIR="$PWD/results/wandb"
 mkdir -p "$WANDB_DIR"
 
-module load sage
+if [[ -z "${SAGE_CMD:-}" && -f "$PWD/sage.sif" ]]; then
+  export SAGE_SIF="$PWD/sage.sif"
+fi
 
-sage -python -c "import wandb" 2>/dev/null || sage -pip install --user wandb
-sage -python scripts/run_simulations.py \
+if [[ -n "${SAGE_SIF:-}" ]]; then
+  if command -v apptainer >/dev/null 2>&1; then
+    run_sage() { apptainer exec "$SAGE_SIF" sage "$@"; }
+  elif command -v singularity >/dev/null 2>&1; then
+    run_sage() { singularity exec "$SAGE_SIF" sage "$@"; }
+  else
+    echo "SAGE_SIF is set, but neither apptainer nor singularity is available." >&2
+    exit 127
+  fi
+elif [[ -n "${SAGE_CMD:-}" ]]; then
+  run_sage() { "$SAGE_CMD" "$@"; }
+elif command -v sage >/dev/null 2>&1; then
+  run_sage() { sage "$@"; }
+else
+  echo "Could not find Sage." >&2
+  echo "Either install/provide Sage and set SAGE_CMD=/path/to/sage, or create sage.sif with:" >&2
+  echo "  apptainer pull sage.sif docker://sagemath/sagemath:latest" >&2
+  exit 127
+fi
+
+run_sage -python -c "import wandb" 2>/dev/null || run_sage -pip install --user wandb
+run_sage -python scripts/run_simulations.py \
   --wandb \
   --wandb-project "$WANDB_PROJECT" \
   --run-name "mulle-${LSB_JOBID}" \
