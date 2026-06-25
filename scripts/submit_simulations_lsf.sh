@@ -3,7 +3,7 @@
 #BSUB -q hpc
 #BSUB -n 1
 #BSUB -R "rusage[mem=8GB]"
-#BSUB -W 04:00
+#BSUB -W 06:00
 #BSUB -o lsf_logs/%J_%I.out
 #BSUB -e lsf_logs/%J_%I.err
 
