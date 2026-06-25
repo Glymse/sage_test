@@ -1,0 +1,140 @@
+{
+  "config": {
+    "density": 0.9,
+    "facit_simulations": "/home/sage/work/FACIT/notebooks/Simulations.ipynb",
+    "field_size": 7,
+    "host": "00c483a1f841",
+    "lsb_jobid": null,
+    "lsb_queue": null,
+    "max_degrees": [
+      2,
+      3
+    ],
+    "platform": "Linux-6.12.68-linuxkit-x86_64-with-glibc2.39",
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "run_name": "smoke-test",
+    "seed": 42,
+    "sizes": [
+      2,
+      3
+    ],
+    "trials": 1
+  },
+  "fits": {
+    "Alekhnovich": {
+      "C": 5.462187337230112e-05,
+      "algorithm": "Alekhnovich",
+      "degree_exponent": "0.580113266393328",
+      "model": "T \u2248 5.462e-05 * n^3.228 * d^0.580",
+      "n_exponent": "3.22844363252210"
+    },
+    "WeakPopov": {
+      "C": 0.23519252344201244,
+      "algorithm": "WeakPopov",
+      "degree_exponent": "-6.62858679881263",
+      "model": "T \u2248 2.352e-01 * n^0.297 * d^-6.629",
+      "n_exponent": "0.296655853575366"
+    }
+  },
+  "normalized_results": [
+    {
+      "Alekhnovich_mean": 0.003495665999935227,
+      "Alekhnovich_median": 0.003495665999935227,
+      "Alekhnovich_normalized": 0.00043695783011670045,
+      "WeakPopov_mean": 0.008710542000017085,
+      "WeakPopov_median": 0.008710542000017085,
+      "WeakPopov_normalized": 0.0005444088750010678,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 2,
+      "n": 2,
+      "trials": 1
+    },
+    {
+      "Alekhnovich_mean": 0.0002119999999194988,
+      "Alekhnovich_median": 0.0002119999999194988,
+      "Alekhnovich_normalized": 1.4398004875854618e-05,
+      "WeakPopov_mean": 6.658300003437034e-05,
+      "WeakPopov_median": 6.658300003437034e-05,
+      "WeakPopov_normalized": 1.8495277787325094e-06,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 3,
+      "n": 2,
+      "trials": 1
+    },
+    {
+      "Alekhnovich_mean": 0.000620416999936424,
+      "Alekhnovich_median": 0.000620416999936424,
+      "Alekhnovich_normalized": 3.446756142747264e-05,
+      "WeakPopov_mean": 0.0011036670000521553,
+      "WeakPopov_median": 0.0011036670000521553,
+      "WeakPopov_normalized": 3.0657416668115424e-05,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 2,
+      "n": 3,
+      "trials": 1
+    },
+    {
+      "Alekhnovich_mean": 0.016375082999957158,
+      "Alekhnovich_median": 0.016375082999957158,
+      "Alekhnovich_normalized": 0.00045242053238264777,
+      "WeakPopov_mean": 0.0006684169998152356,
+      "WeakPopov_median": 0.0006684169998152356,
+      "WeakPopov_normalized": 8.25206172611402e-06,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 3,
+      "n": 3,
+      "trials": 1
+    }
+  ],
+  "result_count": 4,
+  "results": [
+    {
+      "Alekhnovich_mean": 0.003495665999935227,
+      "Alekhnovich_median": 0.003495665999935227,
+      "WeakPopov_mean": 0.008710542000017085,
+      "WeakPopov_median": 0.008710542000017085,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 2,
+      "n": 2,
+      "trials": 1
+    },
+    {
+      "Alekhnovich_mean": 0.0002119999999194988,
+      "Alekhnovich_median": 0.0002119999999194988,
+      "WeakPopov_mean": 6.658300003437034e-05,
+      "WeakPopov_median": 6.658300003437034e-05,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 3,
+      "n": 2,
+      "trials": 1
+    },
+    {
+      "Alekhnovich_mean": 0.000620416999936424,
+      "Alekhnovich_median": 0.000620416999936424,
+      "WeakPopov_mean": 0.0011036670000521553,
+      "WeakPopov_median": 0.0011036670000521553,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 2,
+      "n": 3,
+      "trials": 1
+    },
+    {
+      "Alekhnovich_mean": 0.016375082999957158,
+      "Alekhnovich_median": 0.016375082999957158,
+      "WeakPopov_mean": 0.0006684169998152356,
+      "WeakPopov_median": 0.0006684169998152356,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 3,
+      "n": 3,
+      "trials": 1
+    }
+  ]
+}

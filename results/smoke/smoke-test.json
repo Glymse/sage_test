@@ -1,0 +1,101 @@
+{
+  "config": {
+    "density": 0.9,
+    "field_size": 7,
+    "host": "00c483a1f841",
+    "lsb_jobid": null,
+    "lsb_queue": null,
+    "max_degrees": [
+      2,
+      3
+    ],
+    "platform": "Linux-6.12.68-linuxkit-x86_64-with-glibc2.39",
+    "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+    "run_name": "smoke-test",
+    "seed": 42,
+    "sizes": [
+      2,
+      3
+    ],
+    "trials": 1
+  },
+  "fits": {
+    "Alekhnovich": {
+      "C": 9.447511572747677e-06,
+      "algorithm": "Alekhnovich",
+      "degree_exponent": 1.8191801270542873,
+      "model": "T ~= 9.448e-06 * n^3.365 * d^1.819",
+      "n_exponent": 3.36490057362676
+    },
+    "WeakPopov": {
+      "C": 0.00047872789744268627,
+      "algorithm": "WeakPopov",
+      "degree_exponent": -1.3202499232494436,
+      "model": "T ~= 4.787e-04 * n^0.061 * d^-1.320",
+      "n_exponent": 0.06115083858813897
+    }
+  },
+  "result_count": 4,
+  "results": [
+    {
+      "Alekhnovich_mean": 0.0017329999999446954,
+      "Alekhnovich_median": 0.0017329999999446954,
+      "Alekhnovich_normalized": 0.00021662479183712276,
+      "Alekhnovich_reduced_trials": 1,
+      "WeakPopov_mean": 0.0010002499999473002,
+      "WeakPopov_median": 0.0010002499999473002,
+      "WeakPopov_normalized": 6.251562499670626e-05,
+      "WeakPopov_reduced_trials": 1,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 2,
+      "n": 2,
+      "trials": 1
+    },
+    {
+      "Alekhnovich_mean": 0.00014233299998522853,
+      "Alekhnovich_median": 0.00014233299998522853,
+      "Alekhnovich_normalized": 9.666562398870308e-06,
+      "Alekhnovich_reduced_trials": 1,
+      "WeakPopov_mean": 2.3417000079462014e-05,
+      "WeakPopov_median": 2.3417000079462014e-05,
+      "WeakPopov_normalized": 6.504722244295003e-07,
+      "WeakPopov_reduced_trials": 1,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 3,
+      "n": 2,
+      "trials": 1
+    },
+    {
+      "Alekhnovich_mean": 0.00026637500002379966,
+      "Alekhnovich_median": 0.00026637500002379966,
+      "Alekhnovich_normalized": 1.4798589782362792e-05,
+      "Alekhnovich_reduced_trials": 1,
+      "WeakPopov_mean": 4.100000001017179e-05,
+      "WeakPopov_median": 4.100000001017179e-05,
+      "WeakPopov_normalized": 1.1388888891714387e-06,
+      "WeakPopov_reduced_trials": 1,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 2,
+      "n": 3,
+      "trials": 1
+    },
+    {
+      "Alekhnovich_mean": 0.014179791999936242,
+      "Alekhnovich_median": 0.014179791999936242,
+      "Alekhnovich_normalized": 0.0003917677269607213,
+      "Alekhnovich_reduced_trials": 1,
+      "WeakPopov_mean": 0.0006003329999657581,
+      "WeakPopov_median": 0.0006003329999657581,
+      "WeakPopov_normalized": 7.411518518095779e-06,
+      "WeakPopov_reduced_trials": 1,
+      "density": 0.9,
+      "field_size": 7,
+      "max_degree": 3,
+      "n": 3,
+      "trials": 1
+    }
+  ]
+}

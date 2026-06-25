@@ -1,0 +1,33 @@
+{
+  "name": "Bachelor Sage",
+  "dockerComposeFile": ["../compose.yaml"],
+  "service": "sage",
+  "workspaceFolder": "/home/sage/work",
+  "overrideCommand": false,
+  "remoteUser": "sage",
+  "updateRemoteUserUID": false,
+  "forwardPorts": [8888],
+
+  "remoteEnv": {
+    "HOME": "/home/sage",
+    "SAGE_DOT_SAGE": "/home/sage/.sage",
+    "JUPYTER_PATH": "/home/sage/.local/share/jupyter:/usr/local/share/jupyter"
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-toolsai.jupyter",
+        "ms-python.python",
+        "ms-python.vscode-pylance"
+      ],
+      "settings": {
+        "jupyter.kernelspecSearchPaths": [
+          "/home/sage/.local/share/jupyter/kernels",
+          "/usr/local/share/jupyter/kernels",
+          "/home/sage/sage/local/var/lib/sage/venv-python3.12/share/jupyter/kernels"
+        ]
+      }
+    }
+  }
+}

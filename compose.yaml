@@ -1,0 +1,10 @@
+services:
+  sage:
+    platform: linux/amd64
+    build: .
+    container_name: sage-vscode
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./:/home/sage/work
+    command: ["sleep", "infinity"]
