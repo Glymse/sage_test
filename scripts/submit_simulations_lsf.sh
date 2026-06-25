@@ -15,7 +15,7 @@ mkdir -p results/parts lsf_logs
 : "${WANDB_API_KEY:?WANDB_API_KEY is not set. Add it to ~/.bashrc or export it before bsub.}"
 
 export WANDB_PROJECT="${WANDB_PROJECT:-mulle}"
-export WANDB_MODE="${WANDB_MODE:-online}"
+export WANDB_MODE="${WANDB_MODE:-offline}"
 export WANDB_DIR="$PWD/results/wandb"
 mkdir -p "$WANDB_DIR"
 

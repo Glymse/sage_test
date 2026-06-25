@@ -14,6 +14,7 @@ Then copy the API key and keep it secret. On the DTU login node, run:
 cat >> ~/.bashrc <<'EOF'
 export WANDB_API_KEY="paste_your_key_here"
 export WANDB_PROJECT="mulle"
+export WANDB_MODE="offline"
 EOF
 source ~/.bashrc
 ```
@@ -146,3 +147,8 @@ lsf_logs/<job-id>_<array-index>.err
 ```
 
 If W&B is online and authenticated, the same run is logged to the `mulle` project.
+By default the LSF array uses `WANDB_MODE=offline` to avoid rate limits from 400 parallel tasks. Sync later with:
+
+```bash
+wandb sync results/wandb/wandb/*
+```
