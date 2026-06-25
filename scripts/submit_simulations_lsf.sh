@@ -43,7 +43,14 @@ else
   exit 127
 fi
 
-run_sage -python -c "import wandb" 2>/dev/null || run_sage -pip install --user wandb
+run_sage -python -c "import wandb" || {
+  echo "wandb is not installed for this Sage Python." >&2
+  echo "Install it once on the login node with:" >&2
+  echo "  \$SAGE_CMD -pip install --user wandb" >&2
+  echo "or run without --wandb." >&2
+  exit 1
+}
+
 run_sage -python scripts/run_simulations.py \
   --wandb \
   --wandb-project "$WANDB_PROJECT" \

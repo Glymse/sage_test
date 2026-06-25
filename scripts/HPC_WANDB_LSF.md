@@ -57,6 +57,15 @@ The job script automatically uses `./sage.sif` if it exists. You can also point 
 export SAGE_CMD=/path/to/sage
 ```
 
+Install W&B once for that Sage Python before submitting the array:
+
+```bash
+$SAGE_CMD -pip install --user wandb
+$SAGE_CMD -python -c "import wandb; print(wandb.__version__)"
+```
+
+Do not install W&B inside each array task; many parallel `pip install` processes can fail on the shared home filesystem.
+
 ## 3. Smoke test before HPC
 
 Run the same script in tiny mode:
