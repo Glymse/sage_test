@@ -42,7 +42,7 @@ results/smoke/smoke-test.json
 results/smoke/smoke-test.csv
 ```
 
-## 3. Submit the V100 LSF job
+## 3. Submit the CPU LSF array job
 
 From the repository root on DTU HPC:
 
@@ -50,27 +50,40 @@ From the repository root on DTU HPC:
 bsub < scripts/submit_simulations_lsf.sh
 ```
 
-The job requests:
+The job runs one `(size, max_degree)` case per array task:
 
 ```bash
-#BSUB -q gpuv100
-#BSUB -gpu "num=1:mode=exclusive_process"
+#BSUB -J "mulle-sim[1-400]"
+#BSUB -q hpc
+#BSUB -n 1
 ```
 
-## 4. Outputs
+## 4. Monitor jobs
 
-The script always saves results locally:
+```bash
+bjobs
+```
+
+## 5. Merge outputs
+
+Each array task saves one part locally:
 
 ```text
-results/<run-name>.json
-results/<run-name>.csv
+results/parts/<run-name>-part-<index>.json
+results/parts/<run-name>-part-<index>.csv
+```
+
+After all jobs finish, merge them:
+
+```bash
+python3 scripts/merge_simulation_parts.py --parts-dir results/parts --output-prefix results/merged
 ```
 
 LSF logs are written to:
 
 ```text
-lsf_logs/<job-id>.out
-lsf_logs/<job-id>.err
+lsf_logs/<job-id>_<array-index>.out
+lsf_logs/<job-id>_<array-index>.err
 ```
 
 If W&B is online and authenticated, the same run is logged to the `mulle` project.

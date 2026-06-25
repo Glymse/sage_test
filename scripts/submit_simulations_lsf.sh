@@ -1,17 +1,16 @@
 #!/bin/bash
-#BSUB -J mulle-simulations
-#BSUB -q gpuv100
-#BSUB -gpu "num=1"
+#BSUB -J "mulle-sim[1-400]"
+#BSUB -q hpc
 #BSUB -n 1
-#BSUB -R "rusage[mem=16GB]"
-#BSUB -W 24:00
-#BSUB -o lsf_logs/%J.out
-#BSUB -e lsf_logs/%J.err
+#BSUB -R "rusage[mem=8GB]"
+#BSUB -W 04:00
+#BSUB -o lsf_logs/%J_%I.out
+#BSUB -e lsf_logs/%J_%I.err
 
 set -euo pipefail
 
 cd "${LS_SUBCWD:-$PWD}"
-mkdir -p results lsf_logs
+mkdir -p results/parts lsf_logs
 
 : "${WANDB_API_KEY:?WANDB_API_KEY is not set. Add it to ~/.bashrc or export it before bsub.}"
 
@@ -27,4 +26,4 @@ sage -python scripts/run_simulations.py \
   --wandb \
   --wandb-project "$WANDB_PROJECT" \
   --run-name "mulle-${LSB_JOBID}" \
-  --output-dir results
+  --output-dir results/parts

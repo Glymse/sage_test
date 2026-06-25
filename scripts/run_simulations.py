@@ -32,6 +32,13 @@ def parse_int_list(value):
     return tuple(int(part.strip()) for part in value.split(",") if part.strip())
 
 
+def select_array_case(sizes, max_degrees, array_index):
+    cases = [(n, d) for n in sizes for d in max_degrees]
+    if array_index < 1 or array_index > len(cases):
+        raise ValueError(f"array index {array_index} is outside 1..{len(cases)}")
+    return cases[array_index - 1], len(cases)
+
+
 def load_facit_namespace():
     sys.path.insert(0, str(FACIT_NOTEBOOKS))
 
@@ -111,8 +118,8 @@ def log_results_to_wandb(wandb_run, results):
 
 def main():
     parser = argparse.ArgumentParser(description="Run exact FACIT simulations with saved results.")
-    parser.add_argument("--sizes", default="5,10,15,20,25,30,35,45")
-    parser.add_argument("--max-degrees", default="5,10,15,20,30,40,50,60,70,80,90,100,110,120,130")
+    parser.add_argument("--sizes", default="50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000")
+    parser.add_argument("--max-degrees", default="50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000")
     parser.add_argument("--field-size", type=int, default=7)
     parser.add_argument("--density", type=float, default=0.9)
     parser.add_argument("--trials", type=int, default=3)
@@ -123,6 +130,7 @@ def main():
     parser.add_argument("--wandb-project", default=os.environ.get("WANDB_PROJECT", "mulle"))
     parser.add_argument("--wandb-mode", default=os.environ.get("WANDB_MODE", "online"))
     parser.add_argument("--smoke-test", action="store_true", help="Run a tiny FACIT-code smoke check.")
+    parser.add_argument("--array-index", type=int, default=None, help="Run one 1-based grid case, for LSF arrays.")
     args = parser.parse_args()
 
     if args.smoke_test:
@@ -135,9 +143,23 @@ def main():
     timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     args.run_name = args.run_name or f"simulations-{timestamp}"
 
+    sizes = parse_int_list(args.sizes)
+    max_degrees = parse_int_list(args.max_degrees)
+    array_index = args.array_index
+
+    if array_index is None and os.environ.get("LSB_JOBINDEX"):
+        array_index = int(os.environ["LSB_JOBINDEX"])
+
+    array_total = None
+    selected_case = None
+    if array_index is not None:
+        selected_case, array_total = select_array_case(sizes, max_degrees, array_index)
+        sizes = (selected_case[0],)
+        max_degrees = (selected_case[1],)
+
     config = {
-        "sizes": parse_int_list(args.sizes),
-        "max_degrees": parse_int_list(args.max_degrees),
+        "sizes": sizes,
+        "max_degrees": max_degrees,
         "field_size": args.field_size,
         "density": args.density,
         "trials": args.trials,
@@ -148,12 +170,18 @@ def main():
         "platform": platform.platform(),
         "lsb_jobid": os.environ.get("LSB_JOBID"),
         "lsb_queue": os.environ.get("LSB_QUEUE"),
+        "lsb_jobindex": os.environ.get("LSB_JOBINDEX"),
+        "array_index": array_index,
+        "array_total": array_total,
+        "selected_case": selected_case,
         "facit_simulations": str(FACIT_SIMULATIONS),
     }
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     prefix = output_dir / args.run_name
+    if array_index is not None:
+        prefix = output_dir / f"{args.run_name}-part-{array_index:03d}"
 
     facit = load_facit_namespace()
     wandb_run = maybe_init_wandb(args, config)
@@ -169,10 +197,12 @@ def main():
         )
 
         normalized_results = facit["add_normalized_times"](results)
-        fits = {
-            "WeakPopov": facit["fit_power_law_two_variables"](results, "WeakPopov"),
-            "Alekhnovich": facit["fit_power_law_two_variables"](results, "Alekhnovich"),
-        }
+        fits = {}
+        if len(results) >= 3:
+            fits = {
+                "WeakPopov": facit["fit_power_law_two_variables"](results, "WeakPopov"),
+                "Alekhnovich": facit["fit_power_law_two_variables"](results, "Alekhnovich"),
+            }
 
         summary = {
             "config": config,
