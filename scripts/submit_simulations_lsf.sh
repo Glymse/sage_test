@@ -1,9 +1,9 @@
 #!/bin/bash
-#BSUB -J "mulle-sim[1-400]"
+#BSUB -J "mulle-sim[1-1326]"
 #BSUB -q hpc
 #BSUB -n 1
 #BSUB -R "rusage[mem=8GB]"
-#BSUB -W 06:00
+#BSUB -W 01:00
 #BSUB -o lsf_logs/%J_%I.out
 #BSUB -e lsf_logs/%J_%I.err
 

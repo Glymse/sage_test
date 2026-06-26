@@ -118,11 +118,11 @@ def log_results_to_wandb(wandb_run, results):
 
 def main():
     parser = argparse.ArgumentParser(description="Run exact FACIT simulations with saved results.")
-    parser.add_argument("--sizes", default="50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000")
-    parser.add_argument("--max-degrees", default="50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000")
+    parser.add_argument("--sizes", default="5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130")
+    parser.add_argument("--max-degrees", default="10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500,510")
     parser.add_argument("--field-size", type=int, default=7)
     parser.add_argument("--density", type=float, default=0.9)
-    parser.add_argument("--trials", type=int, default=3)
+    parser.add_argument("--trials", type=int, default=5)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--output-dir", default="results")
     parser.add_argument("--run-name", default=None)
